@@ -29,6 +29,7 @@ public class main {
 		}
 		}
 	//whaddup bros
+	///this is another staged file
 				
 <<<<<<< HEAD
 	
