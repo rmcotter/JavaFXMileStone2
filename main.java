@@ -28,5 +28,6 @@ public class main {
 			 System.out.println(var);
 		}
 		}
+	//whaddup bros
 				
 }
