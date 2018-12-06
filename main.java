@@ -28,7 +28,12 @@ public class main {
 			 System.out.println(var);
 		}
 		}
+	//whaddup bros
 				
+<<<<<<< HEAD
 	
 	// Oliver's update
 }
+=======
+}
+>>>>>>> branch 'master' of https://github.com/rmcotter/JavaFXMileStone2.git
