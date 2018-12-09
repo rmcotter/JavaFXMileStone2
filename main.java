@@ -30,8 +30,6 @@ public class main extends Application {
 		// instantiate ADT
 		launch(args);
 	}
-
-	//the guy next to Kyle looks like ted cruz
 	
 	@Override
 	public void start(Stage primaryStage) throws Exception {try {
