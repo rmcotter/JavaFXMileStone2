@@ -33,43 +33,22 @@ public class main extends Application {
 
 	@Override
 	public void start(Stage primaryStage) throws Exception {try {
-		Button button1 = new Button("Load From File");
-		Button button2 = new Button("Save To File");
-		Button button3 = new Button("Add One Food");
+		Button loadFromFile = new Button("Load From File");
+		Button saveToFile = new Button("Save To File");
+		Button addOneFood = new Button("Add One Food");
 		
 		//creating top menu
 		HBox topMenu = new HBox();
-		topMenu.getChildren().addAll(button1, button2, button3);
+		topMenu.getChildren().addAll(loadFromFile, saveToFile, addOneFood);
 		
 		//creating rule list section
-		Label ruleListLabel = new Label("Rules");
 		
-		ListView<String> ruleList = new ListView<String>();
-		ruleList.getItems().addAll("Rule 1", "Rule 2", "Rule 3");
-		ruleList.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
-		ruleList.setMinWidth(280);
-		
+		///all the buttons/inputs
 		Button applyRules = new Button("Apply Rules");
 		Button removeRule = new Button("Remove Rule");
 		Button clearRules = new Button("Clear Rules");
-		removeRule.setMinWidth(100);
-		applyRules.setMinWidth(92);
-		
-		HBox ruleListButtons = new HBox();
-		ruleListButtons.getChildren().addAll(applyRules, removeRule, clearRules);
-
-		Separator ruleSecSep = new Separator();
-		Label blankSpace1 = new Label("");
-		Label ruleEditorLabel = new Label("Rule Editor");
-		Separator ruleSecSep2 = new Separator();
-		
-		Button nutrientFilter = new Button("Nutrient Filter");
-		Button nameFilter = new Button("Name Filter");
-		
-		HBox ruleCreateButtons = new HBox();
-		ruleCreateButtons.getChildren().addAll(nutrientFilter, nameFilter);
-		
-		//creating nutrient rule creator section
+		Button addNutrientRule = new Button("Add Rule");
+		Button addNameRule = new Button("Add Rule");
 		
 		ToggleGroup nutrientTypes = new ToggleGroup();
 		RadioButton calorieButton = new RadioButton("Calories");
@@ -82,8 +61,6 @@ public class main extends Application {
 		fiberButton.setToggleGroup(nutrientTypes);
 		RadioButton proteinButton = new RadioButton("Protein");
 		proteinButton.setToggleGroup(nutrientTypes);
-		VBox nutrientTypesSec = new VBox();
-		nutrientTypesSec.getChildren().addAll(calorieButton, fatButton, carbsButton, fiberButton, proteinButton);
 		
 		ToggleGroup operators = new ToggleGroup();
 		RadioButton equalTo = new RadioButton("=");
@@ -92,30 +69,73 @@ public class main extends Application {
 		lessThan.setToggleGroup(operators);
 		RadioButton greaterThan = new RadioButton(">");
 		greaterThan.setToggleGroup(operators);
-		VBox operatorsSec = new VBox();
-		operatorsSec.getChildren().addAll(equalTo, lessThan, greaterThan);
-		operatorsSec.setTranslateX(25);
 		
 		TextField valueInput = new TextField();
+		TextField nameInput = new TextField();
+		
+		///creating the list section
+		Label ruleListLabel = new Label("Rules");
+		
+		ListView<String> ruleList = new ListView<String>();
+		ruleList.getItems().addAll("Rule 1", "Rule 2", "Rule 3");
+		ruleList.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+		ruleList.setMinWidth(280);
+		removeRule.setMinWidth(100);
+		applyRules.setMinWidth(92);
+		
+		HBox ruleListButtons = new HBox();
+		ruleListButtons.getChildren().addAll(applyRules, removeRule, clearRules);
+
+		///creating rule creator section
+		Separator ruleSecSep = new Separator();
+		Label blankSpace1 = new Label("");
+		Label nutrientRuleLabel = new Label("Nutrient Filter Editor");
+		Separator ruleSecSep2 = new Separator();
+		
+		VBox nutrientTypesSec = new VBox();
+		nutrientTypesSec.getChildren().addAll(calorieButton, fatButton, carbsButton, fiberButton, proteinButton);
+		
+		VBox operatorsSec = new VBox();
+		operatorsSec.getChildren().addAll(equalTo, lessThan, greaterThan);
+		operatorsSec.setTranslateX(15);
+		
 		valueInput.setMaxWidth(75);
 		valueInput.setTranslateX(55);
 		VBox valueFieldSec = new VBox();
-		Button addRuleButton = new Button("Add Rule");
-		addRuleButton.setTranslateX(56);
-		addRuleButton.setTranslateY(35.5);
-		valueFieldSec.getChildren().addAll(valueInput, addRuleButton);
-		
+		addNutrientRule.setTranslateX(56);
+		addNutrientRule.setTranslateY(35.5);
+		valueFieldSec.getChildren().addAll(valueInput, addNutrientRule);
 		
 		HBox nutrientRuleOptions = new HBox();
 		nutrientRuleOptions.getChildren().addAll(nutrientTypesSec, operatorsSec, valueFieldSec);
-		nutrientRuleOptions.setTranslateY(20);
 		
+		Separator nameRuleSep = new Separator();
+		Label nameRuleLabel = new Label("Name Filter Editor");
+		Separator nameRuleSep2 = new Separator();
+		
+		HBox nameRuleInputs = new HBox();
+		nameRuleInputs.getChildren().addAll(nameInput, addNameRule);
+		addNameRule.setTranslateX(37);
 		
 		VBox ruleSection = new VBox();
-		ruleSection.getChildren().addAll(ruleListLabel, ruleList, ruleListButtons, ruleSecSep, blankSpace1, ruleEditorLabel, ruleSecSep2, ruleCreateButtons, nutrientRuleOptions);
+		ruleSection.getChildren().addAll(ruleListLabel, ruleList, ruleListButtons, ruleSecSep, blankSpace1, nutrientRuleLabel, ruleSecSep2, nutrientRuleOptions, nameRuleSep, nameRuleLabel, nameRuleSep2, nameRuleInputs);
 		ruleSection.setBorder(new Border(new BorderStroke(Color.GREY,BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
 		
 		//creating filtered list section
+		
+		///all the buttons
+		Button addToMeal = new Button("Add to Meal");
+		
+		///all variable labels
+		Label totalCount = new Label("Total Count: _____");
+		Label foodName = new Label("Name: _____");
+		Label foodID = new Label("ID: _____");
+		Label foodCalories = new Label("Calories: _____");
+		Label foodFat = new Label("Fat: _____");
+		Label foodCarbohydrates = new Label("Carbohydrates: _____");
+		Label foodFiber = new Label("Fiber: _____");
+		Label foodProtein = new Label("Protein: _____");
+		
 		Label filteredListLabel = new Label("Filtered Food List");
 		
 		ListView<String> filteredList = new ListView<String>();
@@ -123,9 +143,7 @@ public class main extends Application {
 		filteredList.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
 		filteredList.setMinWidth(280);
 		
-		Label totalCount = new Label("Total Count: _____");
 		totalCount.setTranslateY(10);
-		Button addToMeal = new Button("Add to Meal");
 		addToMeal.setTranslateX(79);
 		
 		HBox filteredListButtons = new HBox();
@@ -135,14 +153,7 @@ public class main extends Application {
 		Label blankSpace2 = new Label("");
 		Label foodNutLabel = new Label("Food Nutrients");
 		Separator foodSecSep2 = new Separator();
-
-		Label foodName = new Label("Name: _____");
-		Label foodID = new Label("ID: _____");
-		Label foodCalories = new Label("Calories: _____");
-		Label foodFat = new Label("Fat: _____");
-		Label foodCarbohydrates = new Label("Carbohydrates: _____");
-		Label foodFiber = new Label("Fiber: _____");
-		Label foodProtein = new Label("Protein: _____");
+		
 		VBox nutrientInfo = new VBox();
 		nutrientInfo.getChildren().addAll(foodName, foodID, foodCalories, foodFat, foodCarbohydrates, foodFiber, foodProtein);
 		nutrientInfo.setTranslateY(8.5);
@@ -152,7 +163,12 @@ public class main extends Application {
 		filteredListSection.getChildren().addAll(filteredListLabel, filteredList, filteredListButtons, foodSecSep, blankSpace2, foodNutLabel, foodSecSep2, nutrientInfo);
 		filteredListSection.setBorder(new Border(new BorderStroke(Color.GREY,BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
 		
-		//creating filtered list section
+		//creating meal list section
+		
+		///all the buttons
+		Button removeFromMeal = new Button("Remove from Meal");
+		Button refresh = new Button("Refresh");
+		
 		Label mealListLabel = new Label("Meal List");
 		
 		ListView<String> mealList = new ListView<String>();
@@ -160,7 +176,6 @@ public class main extends Application {
 		mealList.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
 		mealList.setMinWidth(280);
 		
-		Button removeFromMeal = new Button("Remove from Meal");
 		removeFromMeal.setTranslateX(146);
 		
 		HBox mealListButtons = new HBox();
@@ -181,7 +196,6 @@ public class main extends Application {
 		mealInfo.setTranslateY(8.5);
 		mealInfo.setTranslateX(20);
 		
-		Button refresh = new Button("Refresh");
 		refresh.setTranslateX(85);
 		
 		HBox mealSummary = new HBox();
@@ -194,7 +208,7 @@ public class main extends Application {
 		mealListSection.setBorder(new Border(new BorderStroke(Color.GREY,BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
 		
 		HBox lists = new HBox(10);
-		lists.setMinHeight(623.5);
+		lists.setMinHeight(626.5);
 		lists.getChildren().addAll(ruleSection,filteredListSection, mealListSection);
 		
 		VBox root = new VBox(10);
