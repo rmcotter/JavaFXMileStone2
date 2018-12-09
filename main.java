@@ -30,7 +30,6 @@ public class main extends Application {
 		// instantiate ADT
 		launch(args);
 	}
-	//What about now?
 	
 	@Override
 	public void start(Stage primaryStage) throws Exception {try {
