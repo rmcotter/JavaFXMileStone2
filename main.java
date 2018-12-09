@@ -31,6 +31,8 @@ public class main extends Application {
 		launch(args);
 	}
 
+	//the guy next to Kyle looks like ted cruz
+	
 	@Override
 	public void start(Stage primaryStage) throws Exception {try {
 		Button loadFromFile = new Button("Load From File");
