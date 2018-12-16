@@ -102,32 +102,35 @@ public class FoodData implements FoodDataADT<FoodItem> {
 	@Override
 	public List<FoodItem> filterByNutrients(List<String> rules) {
 		List<FoodItem> filtered = new ArrayList<FoodItem>();
+		filtered.addAll(this.getAllFoodItems());
 		if (rules.isEmpty()) {
-			return this.foodItemList;
+			// do not edit filtered
 		} else {
-			for (int j = 0; j < this.foodItemList.size(); j++) {
-				boolean passed = true;
-				for (int i = 0; i < rules.size(); i++) {
+//			for (int j = 0; j < this.foodItemList.size(); j++) {
+//				boolean passed = true;
+			for (int i = 0; i < rules.size(); i++) {
 
-					String r = rules.get(i);
-					String rr[] = r.split(" ");
+				String r = rules.get(i);
+				String rr[] = r.split(" ");
 
-					if (rr.length != 1) {
-						if (rr[1].contentEquals("=")) {
-							if (this.foodItemList.get(j).getNutrientValue(rr[0]) != Integer.parseInt(rr[2])) {
-								passed = false;
-							}
-						} else if (rr[1].contentEquals(">=")) {
+				if (rr.length != 1) {
+					filtered.retainAll(indexes.get(rr[0]).rangeSearch(Double.parseDouble(rr[2]), rr[1]));
 
-						} else {
-
-						}
-					}
-				}
-				if (passed) {
-					filtered.add(this.foodItemList.get(j));
+//						if (rr[1].contentEquals("==")) {
+//							if (this.foodItemList.get(j).getNutrientValue(rr[0]) != Integer.parseInt(rr[2])) {
+//								passed = false;
+//							}
+//						} else if (rr[1].contentEquals(">=")) {
+//
+//						} else {
+//
+//						}
 				}
 			}
+//				if (passed) {
+//					filtered.add(this.foodItemList.get(j));
+//				}
+//			}
 		}
 		return filtered;
 	}
@@ -140,14 +143,11 @@ public class FoodData implements FoodDataADT<FoodItem> {
 	@Override
 	public void addFoodItem(FoodItem foodItem) {
 		foodItemList.add(foodItem);
-		// indexes.get("calories").insert(foodItem.getNutrientValue("calories"),
-		// foodItem);
-		// indexes.get("fat").insert(foodItem.getNutrientValue("fat"), foodItem);
-		// indexes.get("carbohydrate").insert(foodItem.getNutrientValue("carbohydrate"),
-		// foodItem);
-		// indexes.get("fiber").insert(foodItem.getNutrientValue("fiber"), foodItem);
-		// indexes.get("protein").insert(foodItem.getNutrientValue("protein"),
-		// foodItem);
+		indexes.get("calories").insert(foodItem.getNutrientValue("calories"), foodItem);
+		indexes.get("fat").insert(foodItem.getNutrientValue("fat"), foodItem);
+		indexes.get("carbohydrate").insert(foodItem.getNutrientValue("carbohydrate"), foodItem);
+		indexes.get("fiber").insert(foodItem.getNutrientValue("fiber"), foodItem);
+		indexes.get("protein").insert(foodItem.getNutrientValue("protein"), foodItem);
 	}
 
 	/*
