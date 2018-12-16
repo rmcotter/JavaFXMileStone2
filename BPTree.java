@@ -208,8 +208,9 @@ public class BPTree<K extends Comparable<K>, V> implements BPTreeADT<K, V> {
 				OverFlowActionRoot();
 				return;
 			}
-			Node sibling = split();
 			InternalNode parent = findParentNode();
+			Node sibling = split();
+			
 			updateParent(sibling, parent);
 
 		}
@@ -240,19 +241,27 @@ public class BPTree<K extends Comparable<K>, V> implements BPTreeADT<K, V> {
 		@SuppressWarnings("unchecked")
 		private InternalNode findParentRecursive(InternalNode intNode) {
 			int i = 0;
-
-			if (intNode.children.contains(this))
+			
+			
+			if (intNode.children.contains(this)){
 				return intNode;
+			}
+			
 			K thiskey = this.keys.get(0);
-
+		
 			for (K internalKey : intNode.keys) {
-				if (thiskey.compareTo(internalKey) <= 0)
+				
+				if (thiskey.compareTo(internalKey)<0)
 					return findParentRecursive((BPTree<K, V>.InternalNode) intNode.children.get(i));
 				i++;
 			}
-
+			
+			try{
 			return findParentRecursive((BPTree<K, V>.InternalNode) intNode.children.get(i));
-
+			}
+			catch(Exception e){
+				return intNode;
+			}
 		}
 
 		/*
@@ -262,9 +271,33 @@ public class BPTree<K extends Comparable<K>, V> implements BPTreeADT<K, V> {
 		 */
 		private void updateParent(Node sibling, InternalNode parent) {
 			parent.keys.add(sibling.getFirstLeafKey());
-			if (!parent.children.contains(this))
-				parent.children.add(this);
-			parent.children.add(sibling);
+			Collections.sort(parent.keys);
+			if (!parent.children.contains(this))parent.children.add(this);
+			List<Node> tempChildren = new ArrayList<Node>();
+			
+			 tempChildren =parent.children;
+			List<Node> tempChildren2 = new ArrayList<Node>();
+			
+			
+			for (Node tempNode : tempChildren)
+			{
+				if(tempNode.keys.get(0).compareTo(sibling.keys.get(0))<=0
+						|| tempChildren2.contains(sibling)){
+					tempChildren2.add(tempNode);
+					
+				}
+				else{
+					tempChildren2.add(sibling);
+					tempChildren2.add(tempNode);
+				}
+				
+			}
+			if(!tempChildren2.contains(sibling))tempChildren2.add(sibling);
+			
+			
+			
+			parent.children = tempChildren2;
+		
 		}
 
 	} // End of abstract class Node
@@ -355,7 +388,8 @@ public class BPTree<K extends Comparable<K>, V> implements BPTreeADT<K, V> {
 		 * @author Rick Cotter
 		 */
 		private void threeWaySplit() {
-			InternalNode oldRoot = this;
+			InternalNode oldRoot = new InternalNode();
+					oldRoot =this;
 			InternalNode lS = new InternalNode();
 			InternalNode rS = new InternalNode();
 			int numKeys = keys.size();
@@ -369,9 +403,11 @@ public class BPTree<K extends Comparable<K>, V> implements BPTreeADT<K, V> {
 			lS.children.addAll(oldRoot.children.subList(0, numChildIndex));
 			rS.children.addAll(oldRoot.children.subList(numChildIndex, numChild));
 
-			keys.removeAll(oldRoot.keys.subList(middleKeyIndex, numKeys));
-			keys.removeAll(oldRoot.keys.subList(0, middleKeyIndex - 1));
+			K tempKey = oldRoot.keys.get(middleKeyIndex-1);
+			keys.removeAll(oldRoot.keys.subList(0, numKeys));
+			//keys.removeAll(oldRoot.keys.subList(0, middleKeyIndex - 1));
 
+			this.keys.add(tempKey);
 			children = new ArrayList<Node>();
 			this.children.add(lS);
 			this.children.add(rS);
@@ -397,7 +433,12 @@ public class BPTree<K extends Comparable<K>, V> implements BPTreeADT<K, V> {
 			int middleKeyIndex = (numKeys / 2) + 1;
 
 			sibling.keys.addAll(keys.subList(middleKeyIndex, numKeys));
-			keys.removeAll(keys.subList(middleKeyIndex - 1, numKeys));
+			for(int i=middleKeyIndex-1; i<numKeys; i++)
+			{
+				keys.remove(middleKeyIndex-1);
+			}
+			
+			//keys.removeAll(keys.subList(middleKeyIndex - 1, numKeys));
 
 			sibling.children.addAll(children.subList(middleKeyIndex, numKeys + 1));
 			children.removeAll(children.subList(middleKeyIndex, numKeys + 1));
