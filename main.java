@@ -79,7 +79,7 @@ public class main extends Application {
 			proteinButton.setToggleGroup(nutrientTypes);
 
 			ToggleGroup operators = new ToggleGroup();
-			RadioButton equalTo = new RadioButton("=");
+			RadioButton equalTo = new RadioButton("==");
 			equalTo.setToggleGroup(operators);
 			RadioButton lessThan = new RadioButton("<=");
 			lessThan.setToggleGroup(operators);
@@ -236,7 +236,21 @@ public class main extends Application {
 			root.getChildren().addAll(topMenu, lists);
 
 			// button actions
-			addNameRule.setOnAction(e -> ruleList.getItems().add(nameInput.getText().replaceAll(" ", "")));
+			addNameRule.setOnAction(new EventHandler<ActionEvent>() {
+				@Override
+				public void handle(ActionEvent event) {
+					for (int i = 0; i < ruleList.getItems().size(); i++) {
+						String r = ruleList.getItems().get(i);
+						String rr[] = r.split(" ");
+
+						if (rr.length == 1) {
+							ruleList.getItems().remove(r);
+						}
+					}
+					ruleList.getItems().add(nameInput.getText().replaceAll(" ", ""));
+				}
+			});
+
 			addNutrientRule.setOnAction(new EventHandler<ActionEvent>() {
 				@Override
 				public void handle(ActionEvent event) {
@@ -259,11 +273,58 @@ public class main extends Application {
 			clearRules.setOnAction(new EventHandler<ActionEvent>() {
 				@Override
 				public void handle(ActionEvent event) {
-					clearRules(ruleList);
-					applyRules(foodlist,filteredList,ruleList,totalCount);
+					ruleList.getItems().clear();
+					filteredList.getItems().clear();
+					String nameRule = null;
+					for (int i = 0; i < ruleList.getItems().size(); i++) {
+						String r = ruleList.getItems().get(i);
+						String rr[] = r.split(" ");
+
+						if (rr.length == 1) {
+							nameRule = r.toLowerCase();
+						}
+					}
+
+					List<FoodItem> nameFiltered = foodlist.filterByName(nameRule);
+					List<FoodItem> nutrientFiltered = foodlist.filterByNutrients(ruleList.getItems());
+
+					Set<FoodItem> nameFilteredSet = new HashSet<FoodItem>(nameFiltered);
+					Set<FoodItem> nutrientFilteredSet = new HashSet<FoodItem>(nutrientFiltered);
+					Set<FoodItem> tempSet = new HashSet<FoodItem>(nameFilteredSet);
+					tempSet.retainAll(nutrientFilteredSet);
+
+					filteredList.getItems().addAll(new ArrayList<FoodItem>(tempSet));
+					totalCount.setText("Total count: " + filteredList.getItems().size());
 				}
-			}); 
-			applyRules.setOnAction(e -> applyRules(foodlist, filteredList, ruleList, totalCount));
+
+			});
+
+			applyRules.setOnAction(new EventHandler<ActionEvent>() {
+				@Override
+				public void handle(ActionEvent event) {
+					filteredList.getItems().clear();
+					String nameRule = null;
+					for (int i = 0; i < ruleList.getItems().size(); i++) {
+						String r = ruleList.getItems().get(i);
+						String rr[] = r.split(" ");
+
+						if (rr.length == 1) {
+							nameRule = r.toLowerCase();
+						}
+					}
+
+					List<FoodItem> nameFiltered = foodlist.filterByName(nameRule);
+					List<FoodItem> nutrientFiltered = foodlist.filterByNutrients(ruleList.getItems());
+
+					Set<FoodItem> nameFilteredSet = new HashSet<FoodItem>(nameFiltered);
+					Set<FoodItem> nutrientFilteredSet = new HashSet<FoodItem>(nutrientFiltered);
+					Set<FoodItem> tempSet = new HashSet<FoodItem>(nameFilteredSet);
+					tempSet.retainAll(nutrientFilteredSet);
+
+					filteredList.getItems().addAll(new ArrayList<FoodItem>(tempSet));
+					totalCount.setText("Total count: " + filteredList.getItems().size());
+				}
+			});
 
 			loadFromFile.setOnAction(new EventHandler<ActionEvent>() {
 				@Override
@@ -521,36 +582,5 @@ public class main extends Application {
 			e.printStackTrace();
 
 		}
-	}
-
-	// main methods
-	public void applyRules(FoodData masterList, ListView<FoodItem> filteredList, ListView<String> ruleList,
-			Label totalCount) {
-		filteredList.getItems().clear();
-		String nameRule = null;
-		for (int i = 0; i < ruleList.getItems().size(); i++) {
-			String r = ruleList.getItems().get(i);
-			String rr[] = r.split(" ");
-
-			if (rr.length == 1) {
-				nameRule = r.toLowerCase();
-			}
-		}
-
-		List<FoodItem> nameFiltered = masterList.filterByName(nameRule);
-		List<FoodItem> nutrientFiltered = masterList.filterByNutrients(ruleList.getItems());
-		List<FoodItem> temp = new ArrayList<FoodItem>();
-
-		Set<FoodItem> nameFilteredSet = new HashSet<FoodItem>(nameFiltered);
-		Set<FoodItem> nutrientFilteredSet = new HashSet<FoodItem>(nutrientFiltered);
-		Set<FoodItem> tempSet = new HashSet<FoodItem>(nameFilteredSet);
-		tempSet.retainAll(nutrientFilteredSet);
-
-		filteredList.getItems().addAll(new ArrayList<FoodItem>(tempSet));
-		totalCount.setText("Total count: " + filteredList.getItems().size());
-	}
-
-	public void clearRules(ListView<String> ruleList) {
-		ruleList.getItems().clear();
 	}
 }
