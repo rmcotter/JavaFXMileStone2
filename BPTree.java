@@ -109,8 +109,8 @@ public class BPTree<K extends Comparable<K>, V> implements BPTreeADT<K, V> {
 	}
 
 	/**
-	 * This abstract class represents any type of node in the tree This class is
-	 * a super class of the LeafNode and InternalNode types.
+	 * This abstract class represents any type of node in the tree This class is a
+	 * super class of the LeafNode and InternalNode types.
 	 * 
 	 * @author sapan
 	 */
@@ -128,8 +128,8 @@ public class BPTree<K extends Comparable<K>, V> implements BPTreeADT<K, V> {
 		}
 
 		/**
-		 * Inserts key and value in the appropriate leaf node and balances the
-		 * tree if required by splitting
+		 * Inserts key and value in the appropriate leaf node and balances the tree if
+		 * required by splitting
 		 * 
 		 * @param key
 		 * @param value
@@ -167,9 +167,10 @@ public class BPTree<K extends Comparable<K>, V> implements BPTreeADT<K, V> {
 			return keys.toString();
 
 		}
-		/*This is used for preventing out of bounds exceptions.
-		 * The indexlocation is the index of where the value should exist
-		 * within a collection
+
+		/*
+		 * This is used for preventing out of bounds exceptions. The indexlocation is
+		 * the index of where the value should exist within a collection
 		 * 
 		 * @author Rick Cotter
 		 */
@@ -180,8 +181,10 @@ public class BPTree<K extends Comparable<K>, V> implements BPTreeADT<K, V> {
 				indexLocation = -indexLocation - 1;
 			return indexLocation;
 		}
-		/*The root action we take when we hit an overflow.
-		 * Will create a sibling node and update the root with the new node
+
+		/*
+		 * The root action we take when we hit an overflow. Will create a sibling node
+		 * and update the root with the new node
 		 * 
 		 * @author Rick Cotter
 		 */
@@ -192,9 +195,11 @@ public class BPTree<K extends Comparable<K>, V> implements BPTreeADT<K, V> {
 			root = newRoot;
 
 		}
-		/*The main overflowAction tag. This will call root overflow if we
-		 * have an overflow on the root, otherwise it will hand it off to 
-		 * internal or leaf processes and update the parent.
+
+		/*
+		 * The main overflowAction tag. This will call root overflow if we have an
+		 * overflow on the root, otherwise it will hand it off to internal or leaf
+		 * processes and update the parent.
 		 * 
 		 * @author Rick Cotter
 		 */
@@ -208,7 +213,9 @@ public class BPTree<K extends Comparable<K>, V> implements BPTreeADT<K, V> {
 			updateParent(sibling, parent);
 
 		}
-		/*This is used to find the parent of a node.
+
+		/*
+		 * This is used to find the parent of a node.
 		 * 
 		 * @author Rick Cotter
 		 */
@@ -224,7 +231,9 @@ public class BPTree<K extends Comparable<K>, V> implements BPTreeADT<K, V> {
 
 			}
 		}
-		/*An internal helper method to find the parent node.
+
+		/*
+		 * An internal helper method to find the parent node.
 		 * 
 		 * @author Rick Cotter
 		 */
@@ -238,16 +247,16 @@ public class BPTree<K extends Comparable<K>, V> implements BPTreeADT<K, V> {
 
 			for (K internalKey : intNode.keys) {
 				if (thiskey.compareTo(internalKey) <= 0)
-					return findParentRecursive((BPTree<K, V>.InternalNode)
-							intNode.children.get(i));
+					return findParentRecursive((BPTree<K, V>.InternalNode) intNode.children.get(i));
 				i++;
 			}
 
-			return findParentRecursive((BPTree<K, V>.InternalNode) 
-					intNode.children.get(i));
+			return findParentRecursive((BPTree<K, V>.InternalNode) intNode.children.get(i));
 
 		}
-		/*A helper method to add information to the parent node.
+
+		/*
+		 * A helper method to add information to the parent node.
 		 * 
 		 * @author Rick Cotter
 		 */
@@ -257,13 +266,13 @@ public class BPTree<K extends Comparable<K>, V> implements BPTreeADT<K, V> {
 				parent.children.add(this);
 			parent.children.add(sibling);
 		}
-		
+
 	} // End of abstract class Node
 
 	/**
-	 * This class represents an internal node of the tree. This class is a
-	 * concrete sub class of the abstract Node class and provides implementation
-	 * of the operations required for internal (non-leaf) nodes.
+	 * This class represents an internal node of the tree. This class is a concrete
+	 * sub class of the abstract Node class and provides implementation of the
+	 * operations required for internal (non-leaf) nodes.
 	 * 
 	 * @author sapan & Rick Cotter
 	 */
@@ -323,7 +332,9 @@ public class BPTree<K extends Comparable<K>, V> implements BPTreeADT<K, V> {
 			}
 
 		}
-		/*When overflowing in internal node we have to be careful since it won't
+
+		/*
+		 * When overflowing in internal node we have to be careful since it won't
 		 * contain the key that gets propogated
 		 * 
 		 * @author Rick Cotter
@@ -338,6 +349,7 @@ public class BPTree<K extends Comparable<K>, V> implements BPTreeADT<K, V> {
 			super.OverFlowAction();
 
 		}
+
 		/*
 		 * 
 		 * @author Rick Cotter
@@ -355,8 +367,7 @@ public class BPTree<K extends Comparable<K>, V> implements BPTreeADT<K, V> {
 			rS.keys.addAll(oldRoot.keys.subList(middleKeyIndex, numKeys));
 
 			lS.children.addAll(oldRoot.children.subList(0, numChildIndex));
-			rS.children.addAll(
-					oldRoot.children.subList(numChildIndex, numChild));
+			rS.children.addAll(oldRoot.children.subList(numChildIndex, numChild));
 
 			keys.removeAll(oldRoot.keys.subList(middleKeyIndex, numKeys));
 			keys.removeAll(oldRoot.keys.subList(0, middleKeyIndex - 1));
@@ -366,13 +377,13 @@ public class BPTree<K extends Comparable<K>, V> implements BPTreeADT<K, V> {
 			this.children.add(rS);
 			root = this;
 		}
+
 		/*
 		 * 
 		 * @author Rick Cotter
 		 */
 		private boolean isValueInChildren(V value, int indexLocation) {
-			return indexLocation >= 0 && children.get(indexLocation)
-					.equals(value);
+			return indexLocation >= 0 && children.get(indexLocation).equals(value);
 		}
 
 		/**
@@ -388,8 +399,7 @@ public class BPTree<K extends Comparable<K>, V> implements BPTreeADT<K, V> {
 			sibling.keys.addAll(keys.subList(middleKeyIndex, numKeys));
 			keys.removeAll(keys.subList(middleKeyIndex - 1, numKeys));
 
-			sibling.children.addAll(
-					children.subList(middleKeyIndex, numKeys + 1));
+			sibling.children.addAll(children.subList(middleKeyIndex, numKeys + 1));
 			children.removeAll(children.subList(middleKeyIndex, numKeys + 1));
 
 			return sibling;
@@ -403,7 +413,6 @@ public class BPTree<K extends Comparable<K>, V> implements BPTreeADT<K, V> {
 		 */
 		List<V> rangeSearch(K key, String comparator) {
 			int i = 0;
-			
 
 			for (K internalKey : keys) {
 				if (key.compareTo(internalKey) <= 0)
@@ -417,8 +426,8 @@ public class BPTree<K extends Comparable<K>, V> implements BPTreeADT<K, V> {
 	} // End of class InternalNode
 
 	/**
-	 * This class represents a leaf node of the tree. This class is a concrete
-	 * sub class of the abstract Node class and provides implementation of the
+	 * This class represents a leaf node of the tree. This class is a concrete sub
+	 * class of the abstract Node class and provides implementation of the
 	 * operations that required for leaf nodes.
 	 * 
 	 * @author sapan
@@ -431,8 +440,6 @@ public class BPTree<K extends Comparable<K>, V> implements BPTreeADT<K, V> {
 		// Reference to the next leaf node
 		LeafNode next;
 
-	
-
 		/**
 		 * Package constructor
 		 */
@@ -441,7 +448,7 @@ public class BPTree<K extends Comparable<K>, V> implements BPTreeADT<K, V> {
 
 			values = new ArrayList<V>();
 			next = null;
-			
+
 		}
 
 		/**
@@ -492,13 +499,13 @@ public class BPTree<K extends Comparable<K>, V> implements BPTreeADT<K, V> {
 			keys.add(indexLocation, key);
 			values.add(indexLocation, value);
 		}
+
 		/*
 		 * 
 		 * @author Rick Cotter
 		 */
 		private boolean isValueInCollection(V value, int indexLocation) {
-			return indexLocation >= 0 && 
-					values.get(indexLocation).equals(value);
+			return indexLocation >= 0 && values.get(indexLocation).equals(value);
 		}
 
 		/**
@@ -511,13 +518,13 @@ public class BPTree<K extends Comparable<K>, V> implements BPTreeADT<K, V> {
 			int numKeys = keys.size();
 			int middleKeyIndex = (numKeys / 2);
 			for (int i = middleKeyIndex; i < numKeys; i++) {
-				//push values over to next node
+				// push values over to next node
 				sibling.keys.add(this.keys.get(i));
 				sibling.values.add(this.values.get(i));
 
 			}
-		
-			//clean up the keys and values from this node
+
+			// clean up the keys and values from this node
 			for (int i = middleKeyIndex; i < numKeys; i++) {
 				keys.remove(middleKeyIndex);
 				values.remove(middleKeyIndex);
@@ -550,8 +557,7 @@ public class BPTree<K extends Comparable<K>, V> implements BPTreeADT<K, V> {
 					indexLocation = Collections.binarySearch(currentKeys, key);
 					indexLocation = areKeysBigger(key, node, indexLocation);
 					if (indexLocation >= 0) {
-						tryToAddKeyToReturnListGT(returnLIst, currentValues, 
-								indexLocation);
+						tryToAddKeyToReturnListGT(returnLIst, currentValues, indexLocation);
 
 					}
 
@@ -559,33 +565,26 @@ public class BPTree<K extends Comparable<K>, V> implements BPTreeADT<K, V> {
 				case "==":
 					indexLocation = Collections.binarySearch(currentKeys, key);
 					if (indexLocation >= 0) {
-						Iterator<K> keyIteration =
-								currentKeys.listIterator(indexLocation);
-						Iterator<V> valueIteration = 
-								currentValues.listIterator(indexLocation);
+						Iterator<K> keyIteration = currentKeys.listIterator(indexLocation);
+						Iterator<V> valueIteration = currentValues.listIterator(indexLocation);
 						while (keyIteration.hasNext()) {
 
-							tryToAddNextKeyToReturnListEQ(key, returnLIst,
-									keyIteration, valueIteration);
+							tryToAddNextKeyToReturnListEQ(key, returnLIst, keyIteration, valueIteration);
 						}
 					}
 					break;
 				case "<=":
 					indexLocation = Collections.binarySearch(keys, key);
-					if (indexLocation < 0 &&
-							node.getFirstLeafKey().compareTo(key) <= 0)
+					if (indexLocation < 0 && node.getFirstLeafKey().compareTo(key) <= 0)
 						indexLocation = 0;
 					if (indexLocation >= 0) {
-						ListIterator<K> keyIteration = 
-								currentKeys.listIterator(indexLocation);
-						ListIterator<V> valueIteration 
-						= currentValues.listIterator(indexLocation);
+						ListIterator<K> keyIteration = currentKeys.listIterator(indexLocation);
+						ListIterator<V> valueIteration = currentValues.listIterator(indexLocation);
 						// increment up the list one to include since it is <=
 						moveIteratorsBackOne(keyIteration, valueIteration);
 
 						while (keyIteration.hasNext()) {
-							tryToAddNextKeyToReturnListLT(key, returnLIst,
-									keyIteration, valueIteration);
+							tryToAddNextKeyToReturnListLT(key, returnLIst, keyIteration, valueIteration);
 						}
 
 					}
@@ -596,41 +595,39 @@ public class BPTree<K extends Comparable<K>, V> implements BPTreeADT<K, V> {
 			}
 			return returnLIst;
 		}
+
 		/**
-		 * Used when finding keys bigger than the key passed in. Adjusts
-		 * indexLocation so that we keep searching if key is not in this 
-		 * collection
+		 * Used when finding keys bigger than the key passed in. Adjusts indexLocation
+		 * so that we keep searching if key is not in this collection
 		 * 
 		 * @author Rick Cotter
 		 */
 		private int areKeysBigger(K key, LeafNode node, int indexLocation) {
-			if (indexLocation < 0 &&
-					node.getFirstLeafKey().compareTo(key) >= 0)
+			if (indexLocation < 0 && node.getFirstLeafKey().compareTo(key) >= 0)
 				indexLocation = 0;
 			return indexLocation;
 		}
+
 		/**
 		 * keeps adding the remaining keys to the return list
 		 * 
 		 * @author Rick Cotter
 		 */
-		private void tryToAddKeyToReturnListGT(List<V> returnLIst, 
-				List<V> currentValues, int indexLocation) {
-			ListIterator<V> valueIteration = 
-					currentValues.listIterator(indexLocation);
+		private void tryToAddKeyToReturnListGT(List<V> returnLIst, List<V> currentValues, int indexLocation) {
+			ListIterator<V> valueIteration = currentValues.listIterator(indexLocation);
 
 			while (valueIteration.hasNext()) {
 				V insertVal = valueIteration.next();
 				returnLIst.add(insertVal);
 			}
 		}
+
 		/**
 		 * Evaluates if the key == currentKey before adding to returnList
 		 * 
 		 * @author Rick Cotter
 		 */
-		private void tryToAddNextKeyToReturnListEQ(K key,
-				List<V> returnLIst, Iterator<K> keyIteration,
+		private void tryToAddNextKeyToReturnListEQ(K key, List<V> returnLIst, Iterator<K> keyIteration,
 				Iterator<V> valueIteration) {
 			K currentKey = keyIteration.next();
 			V currentVal = valueIteration.next();
@@ -638,29 +635,28 @@ public class BPTree<K extends Comparable<K>, V> implements BPTreeADT<K, V> {
 				returnLIst.add(currentVal);
 			}
 		}
+
 		/**
 		 * Evaluates if the key is <= currentKey before adding to returnList
 		 * 
 		 * @author Rick Cotter
 		 */
-		private void tryToAddNextKeyToReturnListLT(K key,
-				List<V> returnLIst, ListIterator<K> keyIteration,
+		private void tryToAddNextKeyToReturnListLT(K key, List<V> returnLIst, ListIterator<K> keyIteration,
 				ListIterator<V> valueIteration) {
 			K currentKey = keyIteration.next();
 			V currentVal = valueIteration.next();
-			if (key.equals(currentKey) ||
-					currentKey.compareTo(key) < 0) {
+			if (key.equals(currentKey) || currentKey.compareTo(key) < 0) {
 				returnLIst.add(currentVal);
 			}
 		}
+
 		/**
-		 * Used to adjust the iterators in order to get them to point to the 
-		 * correct index
+		 * Used to adjust the iterators in order to get them to point to the correct
+		 * index
 		 * 
 		 * @author Rick Cotter
 		 */
-		private void moveIteratorsBackOne(ListIterator<K> keyIteration,
-				ListIterator<V> valueIteration) {
+		private void moveIteratorsBackOne(ListIterator<K> keyIteration, ListIterator<V> valueIteration) {
 			if (keyIteration.hasPrevious()) {
 				keyIteration.previous();
 				valueIteration.previous();
@@ -683,7 +679,7 @@ public class BPTree<K extends Comparable<K>, V> implements BPTreeADT<K, V> {
 		Random rnd1 = new Random();
 
 		// some value to add to the BPTree
-		Double[] dd = { 0.0d, 0.5d, 0.2d, 0.8d };
+		Double[] dd = { 0.0d, 0.5d, 0.2d, 0.8d, 0.9d, 0.4d, 0.7d, 0.4d, 0.4d };
 
 		// build an ArrayList of those value and add to BPTree also
 		// allows for comparing the contents of the ArrayList
@@ -692,8 +688,8 @@ public class BPTree<K extends Comparable<K>, V> implements BPTreeADT<K, V> {
 		// just that it functions as a data structure with
 		// insert, rangeSearch, and toString() working.
 		List<Double> list = new ArrayList<>();
-		for (int i = 0; i < 400; i++) {
-			Double j = dd[rnd1.nextInt(4)];
+		for (int i = 0; i < 9; i++) {
+			Double j = dd[i];
 			list.add(j);
 			bpTree.insert(j, j);
 			System.out.println("\n\nTree structure:\n" + bpTree.toString());

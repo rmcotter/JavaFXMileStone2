@@ -72,4 +72,9 @@ public class FoodItem {
         return nutrients.get(name);
     }
     
+    //added by Soham
+    public String toString() {
+    	return this.getName();
+    }
+    
 }
