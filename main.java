@@ -11,7 +11,9 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.RadioButton;
@@ -19,6 +21,7 @@ import javafx.scene.control.SelectionMode;
 import javafx.scene.control.Separator;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Border;
 import javafx.scene.layout.BorderPane;
@@ -495,6 +498,17 @@ public class main extends Application {
 			refresh.setOnAction(new EventHandler<ActionEvent>() {
 				@Override
 				public void handle(ActionEvent event) {
+					
+					//if meal list is empty
+					
+					
+					if (mealList.getItems().size() == 0) {
+						Alert emptyRefresh = 
+								new Alert(AlertType.WARNING, "Meal List must not be empty, in order to analyze.");
+						emptyRefresh.showAndWait()
+								.filter(response -> response == ButtonType.OK);
+					}
+					
 					double calories = 0, fat = 0, carb = 0, fiber = 0, protein = 0;
 					for (int i = 0; i < mealList.getItems().size(); i++) {
 						calories = calories + mealList.getItems().get(i).getNutrientValue("calories");
