@@ -242,15 +242,17 @@ public class main extends Application {
 			addNameRule.setOnAction(new EventHandler<ActionEvent>() {
 				@Override
 				public void handle(ActionEvent event) {
-					for (int i = 0; i < ruleList.getItems().size(); i++) {
-						String r = ruleList.getItems().get(i);
-						String rr[] = r.split(" ");
+					if (!nameInput.getText().contentEquals("")) {
+						for (int i = 0; i < ruleList.getItems().size(); i++) {
+							String r = ruleList.getItems().get(i);
+							String rr[] = r.split(" ");
 
-						if (rr.length == 1) {
-							ruleList.getItems().remove(r);
+							if (rr.length == 1) {
+								ruleList.getItems().remove(r);
+							}
 						}
+						ruleList.getItems().add(nameInput.getText().replaceAll(" ", ""));
 					}
-					ruleList.getItems().add(nameInput.getText().replaceAll(" ", ""));
 				}
 			});
 
@@ -559,17 +561,15 @@ public class main extends Application {
 			refresh.setOnAction(new EventHandler<ActionEvent>() {
 				@Override
 				public void handle(ActionEvent event) {
-					
-					//if meal list is empty
-					
-					
+
+					// if meal list is empty
+
 					if (mealList.getItems().size() == 0) {
-						Alert emptyRefresh = 
-								new Alert(AlertType.WARNING, "Meal List must not be empty, in order to analyze.");
-						emptyRefresh.showAndWait()
-								.filter(response -> response == ButtonType.OK);
+						Alert emptyRefresh = new Alert(AlertType.WARNING,
+								"Meal List must not be empty, in order to analyze.");
+						emptyRefresh.showAndWait().filter(response -> response == ButtonType.OK);
 					}
-					
+
 					double calories = 0, fat = 0, carb = 0, fiber = 0, protein = 0;
 					for (int i = 0; i < mealList.getItems().size(); i++) {
 						calories = calories + mealList.getItems().get(i).getNutrientValue("calories");
