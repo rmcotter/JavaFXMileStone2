@@ -5,7 +5,7 @@ import java.util.List;
 /**
  * This class represents a food item with all its properties.
  * 
- * @author Rick Cotter
+ * @author Rick Cotter, Kyle Berkow, Oliver Kao, Soham Amin
  */
 public class FoodItem {
     // The name of the food item.
@@ -72,7 +72,9 @@ public class FoodItem {
         return nutrients.get(name);
     }
     
-    //added by Soham
+    /**
+     * Returns the name of the item as string
+     */
     public String toString() {
     	return this.getName();
     }

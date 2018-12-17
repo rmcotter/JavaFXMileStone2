@@ -15,7 +15,7 @@ import java.util.Random;
  * compared to other types of data structures due to the ability to perform
  * log_m N lookups and linear in-order traversals of the data items.
  * 
- * @author sapan (sapan@cs.wisc.edu) & Rick Cotter
+ * @author sapan (sapan@cs.wisc.edu) & Rick Cotter, Kyle Berkow, Soham Amin, Oliver Kao
  *
  * @param <K>
  *            key - expect a string that is the type of id for each item
@@ -278,7 +278,6 @@ public class BPTree<K extends Comparable<K>, V> implements BPTreeADT<K, V> {
 			 tempChildren =parent.children;
 			List<Node> tempChildren2 = new ArrayList<Node>();
 			
-			
 			for (Node tempNode : tempChildren)
 			{
 				if(tempNode.keys.get(0).compareTo(sibling.keys.get(0))<=0
@@ -339,7 +338,6 @@ public class BPTree<K extends Comparable<K>, V> implements BPTreeADT<K, V> {
 		 * @see BPTree.Node#isOverflow()
 		 */
 		boolean isOverflow() {
-
 			return children.size() > branchingFactor;
 		}
 
